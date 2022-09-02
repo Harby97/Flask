@@ -1,0 +1,12 @@
+{% extends 'hello.html' %}
+
+{% block title %} 
+    {{ super() }}
+    404
+{% endblock %}
+
+
+{% block content %}
+    <h1>Lo sentimos, no encontramos lo que buscabas</h1>
+    <p>Error 404, detalles: {{ error }}</p>
+{% endblock %}

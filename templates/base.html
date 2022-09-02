@@ -1,0 +1,24 @@
+{% extends 'hello.html' %}
+{% import 'macros.html' as macros %}
+
+{% block title %} 
+    {{ super() }}
+    Bienvenido 
+{% endblock %}
+
+
+{% block begining %}
+    <h1>Hello, your IP is: {{data.user_ip}}</h1>    
+{% endblock %}
+
+{% block content %}
+    {% if data.number_of_courses > 0 %}
+    <ul>
+        {% for c in data.courses %}
+            {{macros.render_list(c)}}
+        {% endfor %}
+    </ul>
+    {% else %}
+        <h2>Number of courses: {{data.number_of_courses}}</h2>
+    {% endif %}
+{% endblock %}
