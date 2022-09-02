@@ -1,5 +1,6 @@
 {% extends 'hello.html' %}
 {% import 'macros.html' as macros %}
+{% import 'bootstrap/wtf.html' as wtf %}
 
 {% block title %} 
     {{ super() }}
@@ -21,4 +22,13 @@
     {% else %}
         <h2>Number of courses: {{data.number_of_courses}}</h2>
     {% endif %}
+
+    <div class="container">
+        <!-- <form action="{{ url_for('hello') }}" method="post">
+            {{ data.login_form.username.label }}
+            {{ data.login_form.username }}
+        </form> -->
+        {{ wtf.quick_form(data.login_form) }}
+    </div>
+
 {% endblock %}

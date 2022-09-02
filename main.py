@@ -1,7 +1,18 @@
-from flask import Flask, request , make_response, redirect, render_template
+from flask import Flask, request , make_response, redirect, render_template, session
+from flask_wtf import FlaskForm
+from wtforms.fields import StringField, PasswordField, SubmitField
+from wtforms.validators import DataRequired
+from flask_bootstrap import Bootstrap
 
 app = Flask(__name__)
+bootstrap = Bootstrap(app)
 
+app.config['SECRET_KEY'] = 'CLAVE SECRETA'
+
+class LoginForm(FlaskForm):
+    username = StringField('Nombre de usuario',validators=[DataRequired()])
+    password = PasswordField('Password',validators=[DataRequired()])
+    submit = SubmitField('Enviar')
 
 @app.errorhandler(404)
 def not_found(error):
@@ -13,7 +24,8 @@ def index():
     user_ip = request.remote_addr
 
     response = make_response(redirect('/hello'))
-    response.set_cookie('user_ip', user_ip)
+    session['user_ip'] = user_ip
+    # response.set_cookie('user_ip', user_ip)
 
     return response
 
@@ -21,12 +33,15 @@ def index():
 @app.route('/hello')
 def hello():
     information = ['php', 'python', 'Java']
-    user_ip = request.cookies.get('user_ip')
-    data = {
+    user_ip = session.get('user_ip')
+    # user_ip = request.cookies.get('user_ip')
+    login_form = LoginForm()
+    data = {                #contexto
         'title': 'Index_Flask',
         'courses': information,
         'number_of_courses': len(information),
-        'user_ip': user_ip
+        'user_ip': user_ip,
+        'login_form': login_form
     }
     return render_template('base.html', data=data)
 
