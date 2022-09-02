@@ -9,10 +9,13 @@
 
 
 {% block begining %}
-    <h1>Hello, your IP is: {{data.user_ip}}</h1>    
+    <h3>Hello, your IP is: {{data.user_ip}}</h3>    
 {% endblock %}
 
 {% block content %}
+    {% if data.username %}
+        <h1>Bienvenido {{ data.username | capitalize}}</h1>
+    {% endif %}
     {% if data.number_of_courses > 0 %}
     <ul>
         {% for c in data.courses %}
